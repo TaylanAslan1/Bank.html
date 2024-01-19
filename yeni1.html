@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanal Banka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        #bakiye {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #islemler {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #yatirMiktari, #cekMiktari {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sanal Banka</h1>
+    
+    <div id="bakiye">
+        <p>Bakiye: $<span id="bakiyeMiktari">1000</span></p>
+    </div>
+
+    <div id="islemler">
+        <div>
+            <h2>Para Yatır</h2>
+            <label for="yatirMiktari">Miktar:</label>
+            <input type="number" id="yatirMiktari" required>
+            <button onclick="paraYatir()">Yatır</button>
+        </div>
+        <div>
+            <h2>Para Çek</h2>
+            <label for="cekMiktari">Miktar:</label>
+            <input type="number" id="cekMiktari" required>
+            <button onclick="paraCek()">Çek</button>
+        </div>
+    </div>
+
+    <script>
+        function paraYatir() {
+            var yatirMiktari = parseFloat(document.getElementById('yatirMiktari').value);
+
+            if (isNaN(yatirMiktari) || yatirMiktari <= 0) {
+                alert('Geçerli bir miktar girin.');
+                return;
+            }
+
+            var bakiye = parseFloat(document.getElementById('bakiyeMiktari').innerText);
+            var yeniBakiye = bakiye + yatirMiktari;
+
+            document.getElementById('bakiyeMiktari').innerText = yeniBakiye.toFixed(2);
+            alert('Para başarıyla yatırıldı. Yeni bakiye: $' + yeniBakiye.toFixed(2));
+        }
+
+        function paraCek() {
+            var cekMiktari = parseFloat(document.getElementById('cekMiktari').value);
+
+            if (isNaN(cekMiktari) || cekMiktari <= 0) {
+                alert('Geçerli bir miktar girin.');
+                return;
+            }
+
+            var bakiye = parseFloat(document.getElementById('bakiyeMiktari').innerText);
+
+            if (cekMiktari > bakiye) {
+                alert('Yetersiz bakiye. Çekilen miktar, mevcut bakiyeden fazla olamaz.');
+                return;
+            }
+
+            var yeniBakiye = bakiye - cekMiktari;
+
+            document.getElementById('bakiyeMiktari').innerText = yeniBakiye.toFixed(2);
+            alert('Para başarıyla çekildi. Yeni bakiye: $' + yeniBakiye.toFixed(2));
+        }
+    </script>
+</body>
+</html>
